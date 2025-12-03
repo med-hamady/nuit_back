@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
-
+from django_rest_framework.response import Response
+from django.http import JsonResponse
 
 
 
@@ -31,3 +32,10 @@ class StaticViewSitemap(Sitemap):
             return reverse(base) + f'#{anchor}'
         return reverse(item)
 
+
+
+
+
+
+def test_deployment(request):
+    return JsonResponse({"status": "Layers backend is deployed successfully!"})
