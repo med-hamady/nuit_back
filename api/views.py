@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
-from django_rest_framework.response import Response
+from rest_framework.response import Response
 from django.http import JsonResponse
 
 

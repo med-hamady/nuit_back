@@ -90,8 +90,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'nuit_db',
-        'USER': 'django_user',
-        'PASSWORD': 'StrongOne14?',
+        'USER': 'nuit_db-user',
+        'PASSWORD': 'nuit_db-userR?1',
         'HOST': DB_HOST,
         'PORT': '3306',
         'OPTIONS': {
