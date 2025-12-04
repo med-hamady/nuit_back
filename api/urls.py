@@ -1,5 +1,10 @@
-from django.urls import path
-from api.views import StaticViewSitemap, home, test_deployment
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from api.views import (
+    StaticViewSitemap, home, test_deployment,
+    CategoryListView, QuizListView, OptionListView,
+    SimulationRunViewSet, IdeaViewSet, ResourceListView, health_check
+)
 from django.views.generic import TemplateView
 from django.contrib.sitemaps.views import sitemap
 
@@ -7,6 +12,10 @@ from django.contrib.sitemaps.views import sitemap
 sitemaps = {
     'static': StaticViewSitemap,
 }
+
+router = DefaultRouter()
+router.register(r'simulation-runs', SimulationRunViewSet, basename='simulation-run')
+router.register(r'ideas', IdeaViewSet, basename='idea')
 
 urlpatterns = [
     path('robots.txt', TemplateView.as_view(
@@ -16,6 +25,16 @@ urlpatterns = [
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django-sitemap'),
 
     path('test/', test_deployment, name='test-deployment'),
+
+    # API Endpoints
+    path('api/categories/', CategoryListView.as_view(), name='category-list'),
+    path('api/quiz/', QuizListView.as_view(), name='quiz-list'),
+    path('api/options/', OptionListView.as_view(), name='option-list'),
+    path('api/resources/', ResourceListView.as_view(), name='resource-list'),
+    path('api/health/', health_check, name='health-check'),
+
+    # ViewSets routes
+    path('api/', include(router.urls)),
 
 ]
 

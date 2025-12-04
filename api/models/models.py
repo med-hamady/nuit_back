@@ -41,6 +41,114 @@ class APILog(models.Model):
     
     
     
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True, null=True)
+    order = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        db_table = "CATEGORIES"
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
+        ordering = ['order']
+
+
+class Option(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='options')
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True, null=True)
+    impact_cost = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+    impact_ecology = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+    impact_autonomy = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+    impact_inclusion = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.category.name} - {self.name}"
+
+    class Meta:
+        db_table = "OPTIONS"
+        verbose_name = 'Option'
+        verbose_name_plural = 'Options'
+
+
+class QuizQuestion(models.Model):
+    question_text = models.TextField()
+    is_true = models.BooleanField(default=True)
+    explanation = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.question_text[:50]
+
+    class Meta:
+        db_table = "QUIZ_QUESTIONS"
+        verbose_name = 'Quiz Question'
+        verbose_name_plural = 'Quiz Questions'
+
+
+class SimulationRun(models.Model):
+    score_cost = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+    score_ecology = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+    score_autonomy = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+    score_inclusion = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+    choices = models.JSONField(default=dict)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Simulation - {self.created_at.strftime('%Y-%m-%d %H:%M')}"
+
+    class Meta:
+        db_table = "SIMULATION_RUNS"
+        verbose_name = 'Simulation Run'
+        verbose_name_plural = 'Simulation Runs'
+        ordering = ['-created_at']
+
+
+class Idea(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    is_approved = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        db_table = "IDEAS"
+        verbose_name = 'Idea'
+        verbose_name_plural = 'Ideas'
+        ordering = ['-created_at']
+
+
+class Resource(models.Model):
+    RESOURCE_TYPES = [
+        ('video', 'Video'),
+        ('article', 'Article'),
+        ('site', 'Site'),
+    ]
+
+    title = models.CharField(max_length=200)
+    type = models.CharField(max_length=20, choices=RESOURCE_TYPES)
+    url = models.URLField()
+    description = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        db_table = "RESOURCES"
+        verbose_name = 'Resource'
+        verbose_name_plural = 'Resources'
+        ordering = ['-created_at']
+
+
 class CustomAccountManager(BaseUserManager):
 
     def create_superuser(self,  password, **other_fields):
@@ -60,7 +168,7 @@ class CustomAccountManager(BaseUserManager):
         return self.create_user(password, **other_fields)
 
     def create_user(self,  password, **other_fields):
-        
+
         user = self.model( **other_fields)
         user.set_password(password)
         user.save()

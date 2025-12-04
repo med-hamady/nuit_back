@@ -1,0 +1,124 @@
+╔══════════════════════════════════════════════════════════════╗
+║         NUIT BACKEND - GUIDE DE DÉMARRAGE RAPIDE            ║
+╚══════════════════════════════════════════════════════════════╝
+
+📋 COMMANDES À EXÉCUTER DANS L'ORDRE
+
+1. INSTALLER PIP (si nécessaire)
+   ────────────────────────────────────────────────────────────
+   python -m ensurepip --upgrade
+
+
+2. INSTALLER LES DÉPENDANCES
+   ────────────────────────────────────────────────────────────
+   pip install -r requirements.txt
+
+
+3. CRÉER LES MIGRATIONS
+   ────────────────────────────────────────────────────────────
+   python manage.py makemigrations
+
+
+4. APPLIQUER LES MIGRATIONS
+   ────────────────────────────────────────────────────────────
+   python manage.py migrate
+
+
+5. CRÉER UN SUPER UTILISATEUR
+   ────────────────────────────────────────────────────────────
+   python manage.py createsuperuser
+
+
+6. CRÉER LES DONNÉES DE TEST
+   ────────────────────────────────────────────────────────────
+   python manage.py shell < create_test_data.py
+
+
+7. LANCER LE SERVEUR
+   ────────────────────────────────────────────────────────────
+   python manage.py runserver
+
+
+8. TESTER LES APIs (dans un autre terminal)
+   ────────────────────────────────────────────────────────────
+   python test_apis.py
+
+
+╔══════════════════════════════════════════════════════════════╗
+║                    URLs IMPORTANTES                          ║
+╚══════════════════════════════════════════════════════════════╝
+
+🌐 Serveur local:        http://127.0.0.1:8000/
+🔐 Interface admin:      http://127.0.0.1:8000/admin/
+🏥 Health check:         http://127.0.0.1:8000/api/health/
+📊 Categories:           http://127.0.0.1:8000/api/categories/
+❓ Quiz:                 http://127.0.0.1:8000/api/quiz/
+💡 Ideas:                http://127.0.0.1:8000/api/ideas/
+📚 Resources:            http://127.0.0.1:8000/api/resources/
+🎮 Simulation runs:      http://127.0.0.1:8000/api/simulation-runs/
+
+
+╔══════════════════════════════════════════════════════════════╗
+║                    TESTS RAPIDES                             ║
+╚══════════════════════════════════════════════════════════════╝
+
+✅ Test GET avec curl:
+   curl http://127.0.0.1:8000/api/health/
+
+✅ Test POST simulation:
+   curl -X POST http://127.0.0.1:8000/api/simulation-runs/ -H "Content-Type: application/json" -d "{\"score_cost\":450.50,\"score_ecology\":75.00,\"score_autonomy\":60.00,\"score_inclusion\":80.00,\"choices\":{\"os\":\"Linux\"}}"
+
+✅ Test POST idea:
+   curl -X POST http://127.0.0.1:8000/api/ideas/ -H "Content-Type: application/json" -d "{\"title\":\"Mon idée\",\"description\":\"Description\"}"
+
+
+╔══════════════════════════════════════════════════════════════╗
+║              CHECKLIST DE VALIDATION                         ║
+╚══════════════════════════════════════════════════════════════╝
+
+☐ Le serveur démarre sans erreur
+☐ L'admin est accessible (http://127.0.0.1:8000/admin/)
+☐ Les données de test sont créées (5 catégories, 15 options)
+☐ GET /api/health/ retourne {"status": "ok"}
+☐ GET /api/categories/ retourne les catégories
+☐ GET /api/quiz/ retourne les questions
+☐ POST /api/simulation-runs/ fonctionne
+☐ POST /api/ideas/ fonctionne
+☐ Le script test_apis.py passe tous les tests
+
+
+╔══════════════════════════════════════════════════════════════╗
+║                 PROBLÈMES COURANTS                           ║
+╚══════════════════════════════════════════════════════════════╝
+
+❌ "No module named 'django'"
+   → pip install -r requirements.txt
+
+❌ "No module named pip"
+   → python -m ensurepip --upgrade
+
+❌ Erreur de connexion MySQL
+   → Vérifier settings.py (DB_HOST, USER, PASSWORD)
+
+❌ Port 8000 déjà utilisé
+   → python manage.py runserver 8080
+
+
+╔══════════════════════════════════════════════════════════════╗
+║                  APRÈS VALIDATION                            ║
+╚══════════════════════════════════════════════════════════════╝
+
+Une fois tous les tests validés, donnez-moi l'ordre de:
+1. Créer un commit avec les modifications
+2. Pousser vers GitHub
+
+Je m'occuperai de tout! 🚀
+
+
+╔══════════════════════════════════════════════════════════════╗
+║               DOCUMENTATION COMPLÈTE                         ║
+╚══════════════════════════════════════════════════════════════╝
+
+📖 README_TESTS.md              → Guide détaillé des tests
+📖 API_DOCUMENTATION.md         → Documentation complète des APIs
+📖 IMPLEMENTATION_SUMMARY.md    → Résumé de l'implémentation
