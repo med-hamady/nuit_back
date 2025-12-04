@@ -80,6 +80,7 @@ class QuizQuestion(models.Model):
     question_text = models.TextField()
     is_true = models.BooleanField(default=True)
     explanation = models.TextField(blank=True, null=True)
+    resource_url = models.URLField(blank=True, null=True, help_text="URL vers une ressource pédagogique")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

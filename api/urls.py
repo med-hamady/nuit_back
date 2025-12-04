@@ -3,7 +3,8 @@ from rest_framework.routers import DefaultRouter
 from api.views import (
     StaticViewSitemap, home, test_deployment,
     CategoryListView, QuizListView, OptionListView,
-    SimulationRunViewSet, IdeaViewSet, ResourceListView, health_check
+    SimulationRunViewSet, IdeaViewSet, ResourceListView, health_check,
+    RegisterView, LoginView, user_profile
 )
 from django.views.generic import TemplateView
 from django.contrib.sitemaps.views import sitemap
@@ -32,6 +33,11 @@ urlpatterns = [
     path('api/options/', OptionListView.as_view(), name='option-list'),
     path('api/resources/', ResourceListView.as_view(), name='resource-list'),
     path('api/health/', health_check, name='health-check'),
+
+    # Authentication Endpoints
+    path('api/auth/register/', RegisterView.as_view(), name='register'),
+    path('api/auth/login/', LoginView.as_view(), name='login'),
+    path('api/auth/me/', user_profile, name='user-profile'),
 
     # ViewSets routes
     path('api/', include(router.urls)),

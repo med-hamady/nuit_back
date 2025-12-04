@@ -76,16 +76,16 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 
 
+# SQLite pour tests locaux (décommenter pour utiliser)
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',  # Path to the database file
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
 
-
+# MySQL pour production (commenter pour tests locaux)
 DB_HOST = '51.210.109.123'
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',

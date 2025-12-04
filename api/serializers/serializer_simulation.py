@@ -20,7 +20,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class QuizQuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuizQuestion
-        fields = ['id', 'question_text', 'is_true', 'explanation']
+        fields = ['id', 'question_text', 'is_true', 'explanation', 'resource_url']
 
 
 class SimulationRunSerializer(serializers.ModelSerializer):
