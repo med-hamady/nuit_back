@@ -8,6 +8,8 @@ from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import login
+from django.middleware.csrf import get_token
+from django.views.decorators.csrf import ensure_csrf_cookie
 from api.models.models import Category, Option, QuizQuestion, SimulationRun, Idea, Resource
 from api.serializers.serializer_simulation import (
     CategorySerializer, OptionSerializer, QuizQuestionSerializer,
@@ -166,3 +168,18 @@ def user_profile(request):
         serializer = UserSerializer(request.user)
         return Response(serializer.data)
     return Response({'error': 'Non authentifié'}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+# GET /api/csrf/ - Récupérer le CSRF token
+@api_view(['GET'])
+@ensure_csrf_cookie
+def get_csrf_token(request):
+    """
+    Retourne le CSRF token pour le frontend.
+    Le cookie CSRF sera automatiquement défini dans la réponse.
+    """
+    csrf_token = get_token(request)
+    return Response({
+        'csrfToken': csrf_token,
+        'detail': 'CSRF cookie set'
+    })

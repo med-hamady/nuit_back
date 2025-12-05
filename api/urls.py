@@ -4,7 +4,7 @@ from api.views import (
     StaticViewSitemap, home, test_deployment,
     CategoryListView, QuizListView, OptionListView,
     SimulationRunViewSet, IdeaViewSet, ResourceListView, health_check,
-    RegisterView, LoginView, user_profile
+    RegisterView, LoginView, user_profile, get_csrf_token
 )
 from django.views.generic import TemplateView
 from django.contrib.sitemaps.views import sitemap
@@ -38,6 +38,9 @@ urlpatterns = [
     path('api/auth/register/', RegisterView.as_view(), name='register'),
     path('api/auth/login/', LoginView.as_view(), name='login'),
     path('api/auth/me/', user_profile, name='user-profile'),
+
+    # CSRF Token
+    path('api/csrf/', get_csrf_token, name='csrf-token'),
 
     # ViewSets routes
     path('api/', include(router.urls)),
